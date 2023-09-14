@@ -1,6 +1,7 @@
 import { Container, Box } from "@mui/material";
 import { FC } from "react";
 import { Logo } from "./logo";
+import { Navbar } from "./navbar";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -19,6 +20,7 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
           }}
         >
           <Box sx={{ my: 2 }}>
+            <Navbar />
             <Logo />
           </Box>
           {children}

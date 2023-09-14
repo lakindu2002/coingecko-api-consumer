@@ -3,18 +3,18 @@ import { Layout } from "coingecko/components/common/layout";
 import { NextPage } from "next";
 import Head from "next/head";
 
-const HomePage: NextPage = () => {
+const CoinsByVolumePage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Coins | Coingecko Client</title>
+        <title>Coins By Volume | Coingecko Client</title>
       </Head>
 
       <Layout>
-        <CoinManagement mode={"currencies"} />
+        <CoinManagement mode={"volume"} />
       </Layout>
     </>
   );
 };
 
-export default HomePage;
+export default CoinsByVolumePage;
