@@ -5,7 +5,7 @@ const HomePage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Coingecko API Consumer</title>
+        <title>Home | Coingecko Client</title>
       </Head>
     </>
   );
