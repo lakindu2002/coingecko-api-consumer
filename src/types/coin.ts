@@ -11,4 +11,7 @@ export interface CoinMarket extends Coin {
   market_cap: number;
   market_cap_change_percentage_24h?: number;
   price_change_percentage_24h?: number;
+  total_volume: number;
 }
+
+export type CoinType = "currencies" | "volume";

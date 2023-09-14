@@ -4,10 +4,13 @@ import { Search } from "coingecko/components/common/search";
 import { CoinTable } from "./coin-table";
 import { Alert, Box, Typography } from "@mui/material";
 import { Paginator } from "coingecko/components/common/paginator";
+import { CoinType } from "coingecko/types/coin";
 
-interface CoinManagementProps {}
+interface CoinManagementProps {
+  mode: CoinType;
+}
 
-export const CoinManagement: FC<CoinManagementProps> = () => {
+export const CoinManagement: FC<CoinManagementProps> = ({ mode }) => {
   const [searchKey, setSearchKey] = useState<string>("");
   const {
     changePageNumber,
@@ -17,7 +20,11 @@ export const CoinManagement: FC<CoinManagementProps> = () => {
     loading,
     pageNumber,
     searchForCoinsByNameOrSymbol,
-  } = useCoins();
+  } = useCoins(mode);
+
+  useEffect(() => {
+    changePageNumber(1);
+  }, [mode]);
 
   useEffect(() => {
     getCoinsPerPage();

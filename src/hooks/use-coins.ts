@@ -1,18 +1,21 @@
 import { useCallback, useState } from "react";
 import axios from "axios";
-import { Coin, CoinMarket } from "coingecko/types/coin";
+import { Coin, CoinMarket, CoinType } from "coingecko/types/coin";
 
 interface ErrorInformation {
   message: string;
 }
 
-const getCoinsById = async (ids: string[]) => {
+const getCoinType = (type: CoinType) =>
+  type === "currencies" ? "market_cap_desc" : "volume_desc";
+
+const getCoinsById = async (ids: string[], type: CoinType) => {
   const url = `api/v3/coins/markets`;
   const coinResp = await axios.get<CoinMarket[]>(url, {
     params: {
       vs_currency: "usd",
       ids: ids.join(","),
-      order: "market_cap_desc",
+      order: getCoinType(type),
       locale: "en",
       per_page: ids.length,
       page: 1,
@@ -21,7 +24,7 @@ const getCoinsById = async (ids: string[]) => {
   return coinResp.data;
 };
 
-export const useCoins = () => {
+export const useCoins = (coinType: CoinType) => {
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
   const [coins, setCoins] = useState<CoinMarket[]>([]);
@@ -52,7 +55,7 @@ export const useCoins = () => {
         )
         .map((coin) => coin.id);
 
-      const results = await getCoinsById(searchableCoins);
+      const results = await getCoinsById(searchableCoins, coinType);
       setCoins(results);
     } catch (err) {
       let message = "";
@@ -69,12 +72,21 @@ export const useCoins = () => {
   };
 
   const getCoinsPerPage = useCallback(async () => {
-    const url = `/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=${pageNumber}&sparkline=false&locale=en`;
+    const url = `/api/v3/coins/markets`;
     try {
       setCoins([]);
       setErrorInformation(undefined);
       setLoading(true);
-      const resp = await axios.get<CoinMarket[]>(url);
+      const resp = await axios.get<CoinMarket[]>(url, {
+        params: {
+          vs_currency: "usd",
+          order: getCoinType(coinType),
+          per_page: 20,
+          page: pageNumber,
+          sparkline: false,
+          locale: "en",
+        },
+      });
       if (resp.status !== 200) {
         throw new Error("Request failed");
       }
@@ -91,13 +103,15 @@ export const useCoins = () => {
     } finally {
       setLoading(false);
     }
-  }, [pageNumber]);
+  }, [coinType, pageNumber]);
 
-  const changePageNumber = (operation: "next" | "previous") => {
+  const changePageNumber = (operation: "next" | "previous" | number) => {
     if (operation === "next") {
       setPageNumber((prev) => prev + 1);
-    } else {
+    } else if (operation === "previous") {
       setPageNumber((prev) => prev - 1);
+    } else {
+      setPageNumber(operation);
     }
   };
 

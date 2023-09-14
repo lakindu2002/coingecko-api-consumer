@@ -23,6 +23,7 @@ interface CoinTableProps {
 
 export const CoinTable: FC<CoinTableProps> = (props) => {
   const { coins, loading = false } = props;
+  const numberFormat = new Intl.NumberFormat();
 
   return (
     <TableContainer component={Paper}>
@@ -32,6 +33,7 @@ export const CoinTable: FC<CoinTableProps> = (props) => {
             <TableCell>Name</TableCell>
             <TableCell>Symbol</TableCell>
             <TableCell>Price</TableCell>
+            <TableCell>Total Volume</TableCell>
             <TableCell>Market Cap</TableCell>
             <TableCell>Change (24h)</TableCell>
           </TableRow>
@@ -53,6 +55,7 @@ export const CoinTable: FC<CoinTableProps> = (props) => {
               </TableCell>
               <TableCell>{coin.symbol.toUpperCase()}</TableCell>
               <TableCell>${coin.current_price.toFixed(2)}</TableCell>
+              <TableCell>{numberFormat.format(coin.total_volume)}</TableCell>
               <TableCell>${coin.market_cap.toLocaleString()}</TableCell>
               <TableCell
                 sx={{
