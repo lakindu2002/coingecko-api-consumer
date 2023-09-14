@@ -15,6 +15,11 @@ const tabs = [
     label: "Trending Against Volume",
     value: "volume",
   },
+  {
+    route: "/global",
+    label: "Global Market Information",
+    value: "global",
+  },
 ];
 
 export const Navbar: FC<NavbarProps> = () => {

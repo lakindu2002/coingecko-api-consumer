@@ -1,10 +1,12 @@
-import { useCoins } from "coingecko/hooks/use-coins";
 import { ChangeEvent, KeyboardEvent, FC, useEffect, useState } from "react";
+import { Box, IconButton, Typography } from "@mui/material";
+import { useCoins } from "coingecko/hooks/use-coins";
 import { Search } from "coingecko/components/common/search";
-import { CoinTable } from "./coin-table";
-import { Alert, Box, Typography } from "@mui/material";
+import { CoinTable } from "coingecko/components/coins/coin-table";
 import { Paginator } from "coingecko/components/common/paginator";
 import { CoinType } from "coingecko/types/coin";
+import { ErrorView } from "coingecko/components/common/error-view";
+import { Close } from "@mui/icons-material";
 
 interface CoinManagementProps {
   mode: CoinType;
@@ -19,6 +21,7 @@ export const CoinManagement: FC<CoinManagementProps> = ({ mode }) => {
     getCoinsPerPage,
     loading,
     pageNumber,
+    isSearched,
     searchForCoinsByNameOrSymbol,
   } = useCoins(mode);
 
@@ -43,18 +46,20 @@ export const CoinManagement: FC<CoinManagementProps> = ({ mode }) => {
     }
   };
 
+  const handleClearSearch = () => {
+    setSearchKey("");
+    if (pageNumber !== 1) {
+      changePageNumber(1);
+    } else {
+      getCoinsPerPage();
+    }
+  };
+
   return (
     <>
       {errorInformation && (
         <Box sx={{ my: 2 }}>
-          <Alert
-            severity="error"
-            sx={{
-              fontWeight: 500,
-            }}
-          >
-            {errorInformation.message}
-          </Alert>
+          <ErrorView message={errorInformation.message} />
         </Box>
       )}
 
@@ -64,6 +69,15 @@ export const CoinManagement: FC<CoinManagementProps> = ({ mode }) => {
           value={searchKey}
           onKeyDown={handleSearchKeyDown}
           onChange={handleSearchKeyChanged}
+          {...(isSearched && {
+            InputProps: {
+              endAdornment: (
+                <IconButton onClick={() => handleClearSearch()}>
+                  <Close />
+                </IconButton>
+              ),
+            },
+          })}
         />
         <Typography variant="overline" align="left">
           Hint: Enter the coin name or symbol and press enter to filter
@@ -71,13 +85,15 @@ export const CoinManagement: FC<CoinManagementProps> = ({ mode }) => {
       </Box>
       <Box sx={{ my: 2, width: "100%" }}>
         <CoinTable coins={coins} loading={loading} />
-        <Box sx={{ my: 2 }}>
-          <Paginator
-            pageNumber={pageNumber}
-            onNextPage={() => changePageNumber("next")}
-            onPreviousPage={() => changePageNumber("previous")}
-          />
-        </Box>
+        {!isSearched && (
+          <Box sx={{ my: 2 }}>
+            <Paginator
+              pageNumber={pageNumber}
+              onNextPage={() => changePageNumber("next")}
+              onPreviousPage={() => changePageNumber("previous")}
+            />
+          </Box>
+        )}
       </Box>
     </>
   );

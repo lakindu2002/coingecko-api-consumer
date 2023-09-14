@@ -19,7 +19,16 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
             alignItems: "center",
           }}
         >
-          <Box sx={{ my: 2 }}>
+          <Box
+            sx={{
+              my: 2,
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
             <Navbar />
             <Logo />
           </Box>

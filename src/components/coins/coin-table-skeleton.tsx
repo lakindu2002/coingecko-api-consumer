@@ -21,6 +21,9 @@ export const CoinTableSkeleton: FC<CoinTableSkeletonProps> = () => (
       <TableCell>
         <Skeleton variant="text" />
       </TableCell>
+      <TableCell>
+        <Skeleton variant="text" />
+      </TableCell>
     </TableRow>
   </>
 );

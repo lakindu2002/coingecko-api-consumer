@@ -54,9 +54,11 @@ export const CoinTable: FC<CoinTableProps> = (props) => {
                 {coin.name}
               </TableCell>
               <TableCell>{coin.symbol.toUpperCase()}</TableCell>
-              <TableCell>${coin.current_price.toFixed(2)}</TableCell>
-              <TableCell>{numberFormat.format(coin.total_volume)}</TableCell>
-              <TableCell>${coin.market_cap.toLocaleString()}</TableCell>
+              <TableCell>${(coin.current_price || 0).toFixed(2)}</TableCell>
+              <TableCell>
+                {numberFormat.format(coin.total_volume || 0)}
+              </TableCell>
+              <TableCell>${(coin.market_cap || 0).toLocaleString()}</TableCell>
               <TableCell
                 sx={{
                   color: (theme) =>

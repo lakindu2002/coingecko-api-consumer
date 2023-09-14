@@ -1,10 +1,7 @@
 import { useCallback, useState } from "react";
 import axios from "axios";
 import { Coin, CoinMarket, CoinType } from "coingecko/types/coin";
-
-interface ErrorInformation {
-  message: string;
-}
+import { ErrorInformation } from "coingecko/types/common";
 
 const getCoinType = (type: CoinType) =>
   type === "currencies" ? "market_cap_desc" : "volume_desc";
@@ -31,6 +28,7 @@ export const useCoins = (coinType: CoinType) => {
   const [errorInformation, setErrorInformation] = useState<
     ErrorInformation | undefined
   >(undefined);
+  const [isSearched, setIsSearched] = useState<boolean>(false);
 
   const searchForCoinsByNameOrSymbol = async (searchString: string) => {
     const formattedSearchString = searchString.trim().toLowerCase();
@@ -41,6 +39,7 @@ export const useCoins = (coinType: CoinType) => {
     const url = "/api/v3/coins/list";
 
     try {
+      setIsSearched(false);
       setLoading(true);
       setCoins([]);
       setErrorInformation(undefined);
@@ -57,6 +56,7 @@ export const useCoins = (coinType: CoinType) => {
 
       const results = await getCoinsById(searchableCoins, coinType);
       setCoins(results);
+      setIsSearched(true);
     } catch (err) {
       let message = "";
       if ((err as any)?.response?.status) {
@@ -75,6 +75,7 @@ export const useCoins = (coinType: CoinType) => {
     const url = `/api/v3/coins/markets`;
     try {
       setCoins([]);
+      setIsSearched(false);
       setErrorInformation(undefined);
       setLoading(true);
       const resp = await axios.get<CoinMarket[]>(url, {
@@ -123,5 +124,6 @@ export const useCoins = (coinType: CoinType) => {
     getCoinsPerPage,
     errorInformation,
     searchForCoinsByNameOrSymbol,
+    isSearched,
   };
 };
