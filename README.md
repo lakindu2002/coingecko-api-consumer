@@ -4,5 +4,5 @@ This project consists of a Next.js project that consumes the Coingecko API
 
 ## Deployment
 
-The app is deployed to S3 via Static Hosting and Amplify. 
-Deployment URL - https://d2rbpcudzk9198.cloudfront.net
+The app is deployed via Amplify Hosting. 
+Deployment URL - https://dev.dthznngy0edw2.amplifyapp.com

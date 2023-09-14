@@ -1,19 +1,22 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-coingeckoapiconsumer-dev-200719-authRole",
-      "UnauthRoleArn": "arn:aws:iam::932055394976:role/amplify-coingeckoapiconsumer-dev-200719-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::932055394976:role/amplify-coingeckoapiconsumer-dev-200719-authRole",
+      "AuthRoleName": "amplify-coingeckoapiconsumer-dev-205326-authRole",
+      "UnauthRoleArn": "arn:aws:iam::932055394976:role/amplify-coingeckoapiconsumer-dev-205326-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::932055394976:role/amplify-coingeckoapiconsumer-dev-205326-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-coingeckoapiconsumer-dev-200719-deployment",
-      "UnauthRoleName": "amplify-coingeckoapiconsumer-dev-200719-unauthRole",
-      "StackName": "amplify-coingeckoapiconsumer-dev-200719",
-      "StackId": "arn:aws:cloudformation:us-east-1:932055394976:stack/amplify-coingeckoapiconsumer-dev-200719/3827f600-530c-11ee-9ced-12b704c49e3b",
-      "AmplifyAppId": "d3llw3zi0hucxm"
+      "DeploymentBucketName": "amplify-coingeckoapiconsumer-dev-205326-deployment",
+      "UnauthRoleName": "amplify-coingeckoapiconsumer-dev-205326-unauthRole",
+      "StackName": "amplify-coingeckoapiconsumer-dev-205326",
+      "StackId": "arn:aws:cloudformation:us-east-1:932055394976:stack/amplify-coingeckoapiconsumer-dev-205326/aa237030-5312-11ee-9928-0ad877cb6587",
+      "AmplifyAppId": "dthznngy0edw2"
     },
     "categories": {
       "hosting": {
-        "S3AndCloudFront": {}
+        "amplifyhosting": {
+          "appId": "dthznngy0edw2",
+          "type": "manual"
+        }
       }
     }
   }
