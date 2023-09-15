@@ -5,6 +5,41 @@ This project consists of a Next.js project that consumes the Coingecko API
 
 App is accessible here: https://coingecko-api-consumer.vercel.app/
 
+## CI
+
+Continous Integration has been setup through a GitHub workflow.
+
+```
+name: Deploy App to Vercel Production
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+on:
+  push:
+    branches:
+      - main
+jobs:
+  Deploy-Production:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set Up Project
+        run: npm install
+      - name: Test Project
+        run: npm run test
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+```
+
+The workflow has a step called `Test Project` that executes everything change has been made in `main` branch. It tests the app using the unit tests defined, and then proceeds to initate CD - Continous Deployment to Vercel.
+
 ## Deployment
 - Application is deployed to Vercel through a GitHub workflow.
 - Application is accessible through: https://coingecko-api-consumer.vercel.app/
