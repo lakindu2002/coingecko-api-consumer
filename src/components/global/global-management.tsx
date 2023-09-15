@@ -1,10 +1,10 @@
-import { Box, Grid } from "@mui/material";
+import { Box, CircularProgress, Grid } from "@mui/material";
 import { useGlobal } from "coingecko/hooks/use-global";
 import { FC, useEffect } from "react";
 import { ErrorView } from "../common/error-view";
 import { GlobalCard } from "./global-card";
 
-interface GlobalManagementProps {}
+interface GlobalManagementProps { }
 
 export const GlobalManagement: FC<GlobalManagementProps> = () => {
   const { errorInformation, getGlobalMarketInformation, information, loading } =
@@ -23,6 +23,10 @@ export const GlobalManagement: FC<GlobalManagementProps> = () => {
           <ErrorView message={errorInformation.message} />
         </Box>
       )}
+
+      {loading && <Box sx={{ display: 'flex', justifyContent: 'center', my: 5 }}>
+        <CircularProgress />
+      </Box>}
 
       {!loading && information && (
         <Grid container spacing={3}>

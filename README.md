@@ -1,6 +1,8 @@
 # Coingecko API Consumer
 
 This project consists of a Next.js project that consumes the Coingecko API
+
+
 App is accessible here: https://coingecko-api-consumer.vercel.app/
 
 ## Deployment
@@ -37,4 +39,8 @@ Create three repository level secrets:
 - VERCEL_TOKEN: The token created in Step 02.
 
 These secrets are used by Vercel during the Workflow to deploy the app.
+
+### Step 05: Run the Workflow
+
+Run the GitHub actions workflow after adding the repo level secrets, and it'll deploy the app to the project ID you specified in the particular org.
 

@@ -23,9 +23,9 @@ export const useGlobal = () => {
   const getGlobalMarketInformation = async () => {
     const url = "/api/v3/global";
     try {
+      setLoading(true);
       setErrorInformation(undefined);
       setInformation(undefined);
-      console.log(url);
       const resp = await axios.get<{ data: GlobalMarket }>(url);
       setInformation(resp.data.data);
     } catch (err) {
